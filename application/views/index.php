@@ -107,21 +107,21 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="<?php echo base_url('cinema'); ?>" class="nav-link">
+							<a href="<?php echo base_url('katalog'); ?>" class="nav-link">
 								<i class="nav-icon fas fa-person-booth"></i>
-								<p>Cinema</p>
+								<p>Katalog</p>
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="<?php echo base_url('film'); ?>" class="nav-link">
-								<i class="nav-icon fas fa-video"></i>
-								<p>Film</p>
+							<a href="<?php echo base_url('jenis_celana'); ?>" class="nav-link">
+								<i class="nav-icon far fa-shirt"></i>
+								<p>Jenis Celana</p>
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="<?php echo base_url('jadwal'); ?>" class="nav-link">
-								<i class="nav-icon fas fa-calendar"></i>
-								<p>Jadwal Tayang</p>
+							<a href="<?php echo base_url('list_celana'); ?>" class="nav-link">
+								<i class="nav-icon fa-solid fa-list"></i>
+								<p>List Celana</p>
 							</a>
 						</li>
 						<li class="nav-item">

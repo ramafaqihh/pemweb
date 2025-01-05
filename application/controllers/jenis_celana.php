@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Film extends CI_Controller
+class Jenis_celana extends CI_Controller
 {
 	public function __construct()
 	{
@@ -13,15 +13,15 @@ class Film extends CI_Controller
 			redirect('login', 'resfresh');
 		}
 
-		$this->load->model('M_Film', 'film');
+		$this->load->model('M_JenisCelana', 'jenis_celana');
 	}
 
 	public function index()
 	{
 		$data = [
-			'title' => 'Film',
-			'page'  => 'film/v_film',
-			'film'  => $this->film->getAllFilm()
+			'title' => 'Jenis Celana',
+			'page'  => 'jenis_celana/v_JenisCelana',
+			'jenis_celana'  => $this->jenis_celana->getAlljenis_celana()
 		];
 
 		$this->load->view('index', $data);
@@ -30,8 +30,8 @@ class Film extends CI_Controller
 	public function add()
 	{
 		$data = [
-			'title' => 'Film',
-			'page'  => 'film/v_addFilm'
+			'title' => 'Jenis Celana',
+			'page'  => 'jenis_celana/v_addJenisCelana'
 		];
 
 		$this->load->view('index', $data);
@@ -39,22 +39,20 @@ class Film extends CI_Controller
 
 	public function store()
 	{
-		$this->form_validation->set_rules('judul', 'Judul Film', 'required', [
-			'required' => 'Judul Film tidak boleh kosong!'
+		$this->form_validation->set_rules('nama_celana', 'Nama Celana', 'required', [
+			'required' => 'Nama Celana  tidak boleh kosong!'
 		]);
-		$this->form_validation->set_rules('genre', 'Genre Film', 'required', [
-			'required' => 'Genre Film tidak boleh kosong!'
+		$this->form_validation->set_rules('bahan', 'Bahan Celana', 'required', [
+			'required' => 'Bahan Celana tidak boleh kosong!'
 		]);
-		$this->form_validation->set_rules('durasi', 'Durasi Film', 'required|numeric');
-		$this->form_validation->set_rules('sinopsis', 'Sinopsis', 'required');
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->add();
 		} else {
-			$judul    = $this->input->post('judul');
-			$genre    = $this->input->post('genre');
-			$durasi   = $this->input->post('durasi');
-			$sinopsis = $this->input->post('sinopsis');
+			$nama_celana    = $this->input->post('nama_celana');
+			$bahan    = $this->input->post('bahan');
+
+			$detail = $this->input->post('detail');
 
 			$upload_gambar = $_FILES['gambar']['name'];
 
@@ -73,28 +71,28 @@ class Film extends CI_Controller
 				if (!$this->upload->do_upload('gambar')) {
 					$this->session->set_flashdata('error', $this->upload->display_errors());
 
-					redirect('film', 'refresh');
+					redirect('jenis_celana', 'refresh');
 				} else {
 					$upload_data = $this->upload->data();
 
 					$data = [
-						'judul'    => $judul,
-						'genre'    => $genre,
-						'durasi'   => $durasi,
-						'sinopsis' => $sinopsis,
+						'nama_celana'    => $nama_celana,
+						'bahan'    => $bahan,
+
+						'detail' => $detail,
 						'gambar'   => $upload_data['file_name']
 					];
 				}
 			} else {
 				$data = [
-					'judul'    => $judul,
-					'genre'    => $genre,
-					'durasi'   => $durasi,
-					'sinopsis' => $sinopsis,
+					'nama_celana'    => $nama_celana,
+					'bahan'    => $bahan,
+
+					'detail' => $detail,
 				];
 			}
 
-			$insert = $this->film->addFilm($data);
+			$insert = $this->jenis_celana->addjenis_celana($data);
 
 			if ($insert) {
 				$this->session->set_flashdata('sukses', 'Data berhasil disimpan');
@@ -102,18 +100,18 @@ class Film extends CI_Controller
 				$this->session->set_flashdata('error', 'Data gagal disimpan!');
 			}
 
-			redirect('film', 'refresh');
+			redirect('jenis_celana', 'refresh');
 		}
 	}
 
 	public function edit($id)
 	{
-		$film = $this->film->getOneFilm($id);
+		$jenis_celana = $this->jenis_celana->getOnejenis_celana($id);
 
 		$data = [
-			'title' => 'Edit Film',
-			'page'  => 'film/v_editFilm',
-			'film'  => $film
+			'title' => 'Edit Jenis Celana',
+			'page'  => 'jenis_celana/v_editJenisCelana',
+			'jenis_celana'  => $jenis_celana
 		];
 
 		$this->load->view('index', $data);
@@ -123,22 +121,22 @@ class Film extends CI_Controller
 	{
 		$id = $this->input->post('id');
 
-		$this->form_validation->set_rules('judul', 'Judul Film', 'required', [
-			'required' => 'Judul Film tidak boleh kosong!'
+		$this->form_validation->set_rules('nama_celana', 'Nama Celana', 'required', [
+			'required' => 'Nama Celana tidak boleh kosong!'
 		]);
-		$this->form_validation->set_rules('genre', 'Genre Film', 'required', [
-			'required' => 'Genre Film tidak boleh kosong!'
+		$this->form_validation->set_rules('bahan', 'Bahan Celana', 'required', [
+			'required' => 'Bahan Celana tidak boleh kosong!'
 		]);
-		$this->form_validation->set_rules('durasi', 'Durasi Film', 'required|numeric');
-		$this->form_validation->set_rules('sinopsis', 'Sinopsis', 'required');
+
+		$this->form_validation->set_rules('detail', 'Detail', 'required');
 
 		if ($this->form_validation->run() == false) {
 			$this->edit($id);
 		} else {
-			$judul    = $this->input->post('judul');
-			$genre    = $this->input->post('genre');
-			$durasi   = $this->input->post('durasi');
-			$sinopsis = $this->input->post('sinopsis');
+			$nama_celana    = $this->input->post('nama_celana');
+			$bahan    = $this->input->post('bahan');
+
+			$detail = $this->input->post('detail');
 
 			$upload_gambar = $_FILES['gambar']['name'];
 
@@ -157,37 +155,37 @@ class Film extends CI_Controller
 				if (!$this->upload->do_upload('gambar')) {
 					$this->session->set_flashdata('error', $this->upload->display_errors());
 
-					redirect('film', 'refresh');
+					redirect('jenis_celana', 'refresh');
 				} else {
 					$upload_data = $this->upload->data();
 
 					$data = [
-						'judul'    => $judul,
-						'genre'    => $genre,
-						'durasi'   => $durasi,
-						'sinopsis' => $sinopsis,
+						'nama_celana'    => $nama_celana,
+						'bahan'    => $bahan,
+
+						'detail' => $detail,
 						'gambar'   => $upload_data['file_name']
 					];
 				}
 			} else {
 				$data = [
-					'judul'    => $judul,
-					'genre'    => $genre,
-					'durasi'   => $durasi,
-					'sinopsis' => $sinopsis,
+					'nama_celana'    => $nama_celana,
+					'bahan'    => $bahan,
+
+					'detail' => $detail,
 				];
 			}
 
-			$film = $this->film->getOneFilm($id);
+			$jenis_celana = $this->jenis_celana->getOnejenis_celana($id);
 
-			$update = $this->film->editFilm($id, $data);
+			$update = $this->jenis_celana->editjenis_celana($id, $data);
 
 			if ($update) {
 				if ($upload_gambar) {
 					$path = FCPATH . 'upload/gambar/';
 
-					if ($film->gambar != NULL) {
-						unlink($path . $film->gambar);
+					if ($jenis_celana->gambar != NULL) {
+						unlink($path . $jenis_celana->gambar);
 					}
 				}
 
@@ -196,20 +194,20 @@ class Film extends CI_Controller
 				$this->session->set_flashdata('error', 'Data gagal diedit');
 			}
 
-			redirect('film', 'refresh');
+			redirect('jenis_celana', 'refresh');
 		}
 	}
 
 	public function delete($id)
 	{
-		$film = $this->film->getOneFilm($id);
-		$delete = $this->film->delete($id);
+		$jenis_celana = $this->jenis_celana->getOnejenis_celana($id);
+		$delete = $this->jenis_celana->delete($id);
 
 		if ($delete) {
 			$path = FCPATH . 'upload/gambar/';
 
-			if ($film->gambar != NULL) {
-				unlink($path . $film->gambar);
+			if ($jenis_celana->gambar != NULL) {
+				unlink($path . $jenis_celana->gambar);
 			}
 
 			$this->session->set_flashdata('sukses', 'Data berhasil dihapus');
@@ -221,4 +219,4 @@ class Film extends CI_Controller
 	}
 }
 
-        /* End of file Film.php */
+/* End of file Jenis_celana.php */

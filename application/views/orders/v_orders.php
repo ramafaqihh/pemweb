@@ -51,11 +51,11 @@
 										<tr>
 											<th>No</th>
 											<th>Nama Pembeli</th>
-											<th>Judul Film</th>
-											<th>Cinema</th>
-											<th>Tanggal</th>
-											<th>Jumlah Tiket</th>
-											<th>No Kursi</th>
+											<th>Nama Celana</th>
+											<th>Katalog</th>
+
+											<th>Jumlah</th>
+											<th>ukuran</th>
 											<th>Harga</th>
 											<th>Action</th>
 										</tr>
@@ -65,27 +65,26 @@
 											<tr>
 												<td><?php echo $i + 1; ?></td>
 												<td><?php echo $order->nama; ?></td>
-												<td><?php echo $order->judul; ?></td>
-												<td><?php echo $order->namaCinema; ?></td>
-												<td><?php echo date('d M Y', strtotime($order->tanggal)) . ' - ' . date('H:i', strtotime($order->jamTayang)); ?></td>
+												<td><?php echo $order->nama_celana; ?></td>
+												<td><?php echo $order->nama_katalog; ?></td>
+
 												<td><?php echo $order->jumlah; ?></td>
-												<td><?php echo $order->no_kursi; ?></td>
+												<td><?php echo $order->ukuran; ?></td>
 												<td><?php echo 'Rp. ' . number_format($order->harga, 0, ',', '.'); ?></td>
 												<td>
-													<div class="btn-group">
-														<a href="<?= base_url('orders/delete/' . $order->id); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah yakin data akan dihapus ?')"><i class="fa fa-trash"></i></a>
-													</div>
-												</td>
-											</tr>
-										<?php endforeach; ?>
-									</tbody>
-								</table>
+
 							</div>
+							</td>
+							</tr>
+						<?php endforeach; ?>
+						</tbody>
+						</table>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div><!-- /.container-fluid -->
-	</section>
-	<!-- /.content -->
+		</div>
+</div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
 </div>

@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Cinema extends CI_Controller
+class Katalog extends CI_Controller
 {
 	public function __construct()
 	{
@@ -13,16 +13,16 @@ class Cinema extends CI_Controller
 			redirect('login', 'resfresh');
 		}
 
-		// memanggil model dengan nama M_User dan di rename menjadi cinema
-		$this->load->model('M_Cinema', 'cinema');
+		// memanggil model dengan nama M_User dan di rename menjadi katalog
+		$this->load->model('M_Katalog', 'katalog');
 	}
 
 	public function index()
 	{
 		$data = [
-			'title'  => 'Cinema',
-			'page'   => 'cinema/v_cinema',
-			'cinema' => $this->cinema->getAllCinema()
+			'title'  => 'Katalog',
+			'page'   => 'katalog/v_katalog',
+			'katalog' => $this->katalog->getAllKatalog()
 		];
 
 		$this->load->view('index', $data);
@@ -31,8 +31,8 @@ class Cinema extends CI_Controller
 	public function add()
 	{
 		$data = [
-			'title' => 'Cinema',
-			'page'  => 'cinema/v_addCinema'
+			'title' => 'Katalog',
+			'page'  => 'katalog/v_addKatalog'
 		];
 
 		$this->load->view('index', $data);
@@ -40,41 +40,41 @@ class Cinema extends CI_Controller
 
 	public function store()
 	{
-		$this->form_validation->set_rules('namaCinema', 'Nama Cinema', 'required', [
-			'required' => 'Nama cinema tidak boleh kosong!'
+		$this->form_validation->set_rules('nama_katalog', 'Nama Katalog', 'required', [
+			'required' => 'Nama katalog tidak boleh kosong!'
 		]);
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->add();
 		} else {
-			$namaCinema = $this->input->post('namaCinema');
+			$nama_katalog = $this->input->post('nama_katalog');
 
 			$data = [
-				'namaCinema' => $namaCinema
+				'nama_katalog' => $nama_katalog
 			];
 
-			$insert = $this->cinema->addCinema($data);
+			$insert = $this->katalog->addKatalog($data);
 
 			if ($insert) {
 				$this->session->set_flashdata('sukses', 'Data berhasil disimpan');
 
-				redirect('cinema', 'refresh');
+				redirect('katalog', 'refresh');
 			} else {
 				$this->session->set_flashdata('error', 'Data gagal disimpan!');
 
-				redirect('cinema', 'refresh');
+				redirect('katalog', 'refresh');
 			}
 		}
 	}
 
 	public function edit($id)
 	{
-		$cinema = $this->cinema->getOneCinema($id);
+		$katalog = $this->katalog->getOneKatalog($id);
 
 		$data = [
-			'title'  => 'Edit Cinema',
-			'page'   => 'cinema/v_editCinema',
-			'cinema' => $cinema
+			'title'  => 'Edit Katalog',
+			'page'   => 'katalog/v_editKatalog',
+			'katalog' => $katalog
 		];
 
 		$this->load->view('index', $data);
@@ -84,36 +84,36 @@ class Cinema extends CI_Controller
 	{
 		$id = $this->input->post('id');
 
-		$this->form_validation->set_rules('namaCinema', 'Nama Cinema', 'required', [
-			'required' => 'Nama cinema harus diisi!'
+		$this->form_validation->set_rules('nama_katalog', 'Nama Katalog', 'required', [
+			'required' => 'Nama katalog harus diisi!'
 		]);
 
 		if ($this->form_validation->run() == false) {
 			$this->edit($id);
 		} else {
-			$namaCinema = $this->input->post('namaCinema');
+			$nama_katalog = $this->input->post('nama_katalog');
 
 			$data = [
-				'namaCinema' => $namaCinema
+				'nama_katalog' => $nama_katalog
 			];
 
-			$update = $this->cinema->editCinema($id, $data);
+			$update = $this->katalog->editKatalog($id, $data);
 
 			if ($update) {
 				$this->session->set_flashdata('sukses', 'Data berhasil diedit');
 
-				redirect('cinema', 'refresh');
+				redirect('katalog', 'refresh');
 			} else {
 				$this->session->set_flashdata('error', 'Data gagal diedit');
 
-				redirect('cinema', 'refresh');
+				redirect('katalog', 'refresh');
 			}
 		}
 	}
 
 	public function delete($id)
 	{
-		$delete = $this->cinema->delete($id);
+		$delete = $this->katalog->delete($id);
 
 		if ($delete) {
 			$this->session->set_flashdata('sukses', 'Data berhasil dihapus');
@@ -126,5 +126,3 @@ class Cinema extends CI_Controller
 		}
 	}
 }
-
-/* End of file Cinema.php */

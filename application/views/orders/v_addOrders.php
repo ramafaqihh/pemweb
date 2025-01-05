@@ -29,30 +29,24 @@
 						<div class="card-body">
 							<form action="<?= base_url('orders/store'); ?>" method="post">
 								<div class="form-group">
-									<label>Judul Film</label>
-									<select name="idJadwal" class="form-control" id="idJadwal">
-										<option value="">-- Pilih Judul Film --</option>
-										<?php foreach ($jadwal as $jdw) : ?>
-											<option value="<?php echo $jdw->id; ?>" data-tanggal="<?php echo date('d M Y', strtotime($jdw->tanggal)) . ' - ' . date('H:i', strtotime($jdw->jamTayang)); ?>" data-kursi="<?php echo ($jdw->jumlahKursi - $jdw->kursiTerjual); ?>"><?php echo $jdw->judul . ' - ' . $jdw->genre . ' | ' . $jdw->namaCinema; ?></option>
+									<label>Nama Celana</label>
+									<select name="idList_celana" class="form-control" id="idList_celana">
+										<option value="">-- Pilih Celana --</option>
+										<?php foreach ($list_celana as $lsc) : ?>
+											<option value="<?php echo $lsc->id; ?>" ($lsc->jumlahCelana - $lsc->celanaTerjual); ?>"><?php echo $lsc->nama_celana . ' - ' . $lsc->bahan . ' | ' . $lsc->nama_katalog; ?></option>
 										<?php endforeach; ?>
 									</select>
-									<span class="text-danger"><?php echo form_error('idJadwal'); ?></span>
-								</div>
-								<div class="form-group">
-									<label>Tanggal</label>
-									<input type="text" class="form-control" readonly name="tanggal" id="tanggal">
-								</div>
-								<div class="form-group">
-									<label>Jumlah Kursi Tersedia</label>
-									<input type="number" class="form-control" readonly name="kursi" id="kursi">
+									<span class="text-danger"><?php echo form_error('idList_celana'); ?></span>
+
+
 								</div>
 								<div class="form-group">
 									<label>Jumlah Order</label>
 									<input type="number" class="form-control" name="jumlah" id="jumlah">
 								</div>
 								<div class="form-group">
-									<label>No Kursi</label>
-									<input type="text" class="form-control" name="no_kursi" id="no_kursi">
+									<label>Ukuran</label>
+									<input type="text" class="form-control" name="ukuran" id="ukuran">
 								</div>
 								<button type="submit" class="btn btn-success" id="btn_simpan">Simpan</button>
 							</form>

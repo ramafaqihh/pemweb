@@ -8,8 +8,8 @@
 				</div><!-- /.col -->
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
-						<li class="breadcrumb-item"><a href="<?= base_url('cinema'); ?>">Data Cinema</a></li>
-						<li class="breadcrumb-item active">Edit Cinema</li>
+						<li class="breadcrumb-item"><a href="<?= base_url('katalog'); ?>">Data Katalog</a></li>
+						<li class="breadcrumb-item active">Tambah Katalog</li>
 					</ol>
 				</div><!-- /.col -->
 			</div><!-- /.row -->
@@ -24,15 +24,14 @@
 				<div class="col-xl-12">
 					<div class="card card-secondary">
 						<div class="card-header">
-							<h3 class="card-title">Form Edit Cinema</h3>
+							<h3 class="card-title">Form Tambah Katalog</h3>
 						</div>
 						<div class="card-body">
-							<form action="<?= base_url('cinema/update'); ?>" method="post">
-								<input type="hidden" name="id" value="<?php echo $cinema->id; ?>">
+							<form action="<?= base_url('katalog/store'); ?>" method="post">
 								<div class="form-group">
-									<label>Nama Cinema</label>
-									<input type="text" name="namaCinema" class="form-control" value="<?php echo $cinema->namaCinema; ?>">
-									<span class="text-danger"><?php echo form_error('namaCinema'); ?></span>
+									<label>Nama Katalog</label>
+									<input type="text" name="nama_katalog" class="form-control" value="<?php echo set_value('nama_katalog'); ?>">
+									<span class="text-danger"><?php echo form_error('nama_katalog'); ?></span>
 								</div>
 								<button type="submit" class="btn btn-success">Simpan</button>
 							</form>

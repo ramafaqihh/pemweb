@@ -6,12 +6,12 @@ class M_Orders extends CI_Model
 {
 	public function getAllOrders($where = null)
 	{
-		$this->db->select('orders.*, user.nama, jadwal_tayang.tanggal, jadwal_tayang.jamTayang, film.judul, cinema.namaCinema');
+		$this->db->select('orders.*, user.nama,  jenis_celana.nama_celana, katalog.nama_katalog');
 
 		$this->db->join('user', 'user.id = orders.idUser', 'inner');
-		$this->db->join('jadwal_tayang', 'jadwal_tayang.id = orders.idJadwal', 'inner');
-		$this->db->join('cinema', 'cinema.id = jadwal_tayang.idCinema', 'inner');
-		$this->db->join('film', 'film.id = jadwal_tayang.idFilm', 'inner');
+		$this->db->join('list_celana', 'list_celana.id = orders.idlist_celana', 'inner');
+		$this->db->join('katalog', 'katalog.id = list_celana.idKatalog', 'inner');
+		$this->db->join('jenis_celana', 'jenis_celana.id = list_celana.idJenis_celana', 'inner');
 
 		if ($where) {
 			$this->db->where($where);
@@ -29,12 +29,12 @@ class M_Orders extends CI_Model
 
 	public function getOneOrders($where)
 	{
-		$this->db->select('orders.*, user.nama, jadwal_tayang.tanggal, jadwal_tayang.jamTayang, film.judul, cinema.namaCinema');
+		$this->db->select('orders.*, user.nama,  jenis_celana.nama_celana, katalog.nama_katalog');
 
 		$this->db->join('user', 'user.id = orders.idUser', 'inner');
-		$this->db->join('jadwal_tayang', 'jadwal_tayang.id = orders.idJadwal', 'inner');
-		$this->db->join('cinema', 'cinema.id = jadwal_tayang.idCinema', 'inner');
-		$this->db->join('film', 'film.id = jadwal_tayang.idFilm', 'inner');
+		$this->db->join('list_celana', 'list_celana.id = orders.idListCelana', 'inner');
+		$this->db->join('katalog', 'katalog.id = list_celana.idKatalog', 'inner');
+		$this->db->join('jenis_celana', 'jenis_celana.id = list_celana.idJenis_celana', 'inner');
 
 		if ($where) {
 			$this->db->where($where);
